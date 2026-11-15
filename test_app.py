@@ -15,6 +15,18 @@ class ProjetoTest(unittest.TestCase):
         result = run(data)
         self.assertEqual(result['total_trechos'], 3)
 
+    def test_rotas_longas_se_dividem_sem_perder_entregas(self):
+        locais = [str(i) + ("Endereço do depósito " * 24) for i in range(5)]
+        data = {"base": "Natal", "entregas": [{"turno": "manhã", "local": local} for local in locais]}
+        trechos = run(data)["turnos"]["manha"]
+        self.assertGreater(len(trechos), 2)
+        self.assertEqual([local for trecho in trechos for local in trecho["entregas"]], [
+            local.strip() for local in locais
+        ])
+        self.assertTrue(all(len(trecho["google_maps"]) <= 2048 for trecho in trechos))
+        for anterior, atual in zip(trechos, trechos[1:]):
+            self.assertEqual(atual["origem"], anterior["entregas"][-1])
+
     def test_cli_com_exemplo(self):
         result = subprocess.run(
             [sys.executable, str(ROOT / "app.py"), str(ROOT / "exemplo.json")],

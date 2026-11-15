@@ -20,10 +20,14 @@ from urllib.parse import urlencode
 MODOS = {"carro": "driving", "a-pe": "walking", "bicicleta": "bicycling", "onibus": "transit"}
 
 
+class EnderecoExcedeLimite(ValueError):
+    pass
+
+
 def _url(acao, parametros):
     url = "https://www.google.com/maps/" + acao + "?" + urlencode({"api": 1, **parametros})
     if len(url) > 2048:
-        raise ValueError("O endereço gerado ultrapassa o limite do Google Maps.")
+        raise EnderecoExcedeLimite("O endereço gerado ultrapassa o limite do Google Maps.")
     return url
 
 
@@ -51,11 +55,22 @@ def run(data):
     for turno, locais in turnos.items():
         origem = base
         trechos = []
-        for inicio in range(0, len(locais), 4):
-            paradas = locais[inicio:inicio + 4]
-            destino = paradas[-1]
-            trechos.append({"origem": origem, "entregas": paradas,
-                            "google_maps": rota(origem, destino, paradas=paradas[:-1])})
+        inicio = 0
+        while inicio < len(locais):
+            tamanho = min(4, len(locais) - inicio)
+            while True:
+                paradas = locais[inicio:inicio + tamanho]
+                destino = paradas[-1]
+                try:
+                    link = rota(origem, destino, paradas=paradas[:-1])
+                except EnderecoExcedeLimite:
+                    if tamanho == 1:
+                        raise
+                    tamanho -= 1
+                else:
+                    break
+            trechos.append({"origem": origem, "entregas": paradas, "google_maps": link})
+            inicio += tamanho
             origem = destino
         rotas[turno] = trechos
     return {"turnos": rotas, "total_trechos": sum(len(v) for v in rotas.values())}
