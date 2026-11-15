@@ -1,0 +1,29 @@
+{
+  "base": "Centro, São Gonçalo do Amarante, RN",
+  "entregas": [
+    {
+      "turno": "manhã",
+      "local": "Igapó, Natal, RN"
+    },
+    {
+      "turno": "manhã",
+      "local": "Potengi, Natal, RN"
+    },
+    {
+      "turno": "manhã",
+      "local": "Lagoa Azul, Natal, RN"
+    },
+    {
+      "turno": "manhã",
+      "local": "Redinha, Natal, RN"
+    },
+    {
+      "turno": "manhã",
+      "local": "Santos Reis, Natal, RN"
+    },
+    {
+      "turno": "tarde",
+      "local": "Alecrim, Natal, RN"
+    }
+  ]
+}
