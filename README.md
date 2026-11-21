@@ -32,4 +32,7 @@ Também é possível encadear a ferramenta com outro comando usando `-` como ent
 ```bash
 cat exemplo.json | python app.py -
 ```
-\nPara manter os relatórios gerenciáveis, o arquivo de entrada aceita até 500 entregas por execução. Os turnos continuam agrupados ignorando maiúsculas/minúsculas e acentos, e cada trecho comporta até quatro entregas ligadas em sequência.\n
+
+Para manter os relatórios gerenciáveis, o arquivo de entrada aceita até 500 entregas por execução. Os turnos continuam agrupados ignorando maiúsculas/minúsculas e acentos, e cada trecho comporta até quatro entregas ligadas em sequência.
+
+Arquivos e entrada padrão JSON são limitados a 1 MB (1.000.000 bytes). Este limite vale mesmo quando as entregas seriam divididas em vários links de rota.
