@@ -32,3 +32,4 @@ Também é possível encadear a ferramenta com outro comando usando `-` como ent
 ```bash
 cat exemplo.json | python app.py -
 ```
+\nPara manter os relatórios gerenciáveis, o arquivo de entrada aceita até 500 entregas por execução. Os turnos continuam agrupados ignorando maiúsculas/minúsculas e acentos, e cada trecho comporta até quatro entregas ligadas em sequência.\n
