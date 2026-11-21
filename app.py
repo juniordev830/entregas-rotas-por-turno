@@ -46,9 +46,16 @@ def rota(origem, destino, modo="carro", paradas=(), evitar_pedagios=False):
 
 
 def run(data):
+    if not isinstance(data, dict):
+        raise ValueError("A entrada deve ser um objeto JSON.")
+    entregas = data.get("entregas")
+    if not isinstance(entregas, list) or len(entregas) > 500 or any(
+        not isinstance(item, dict) for item in entregas
+    ):
+        raise ValueError("Informe até 500 entregas como objetos.")
     base = texto(data["base"])
     turnos = {}
-    for item in data["entregas"]:
+    for item in entregas:
         turno = chave(item["turno"])
         turnos.setdefault(turno, []).append(texto(item["local"]))
     rotas = {}
