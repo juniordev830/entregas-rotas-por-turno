@@ -89,7 +89,7 @@ def run(data):
             inicio += tamanho
             origem = destino
         if retorno and locais and origem != base:
-            trechos.append({"origem": origem, "entregas": [], "google_maps": rota(origem, base), "retorno_base": True})
+            trechos.append({"origem": origem, "entregas": [], "destino": base, "google_maps": rota(origem, base), "retorno_base": True})
         rotas[turno] = trechos
     return {"turnos": rotas, "total_trechos": sum(len(v) for v in rotas.values())}
 

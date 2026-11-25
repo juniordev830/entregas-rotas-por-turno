@@ -41,3 +41,5 @@ Arquivos e entrada padrão JSON são limitados a 1 MB (1.000.000 bytes). Este li
 ## Novo recurso
 
 Com `retornar_base: true`, adiciona um trecho separado de retorno à base após a última entrega de cada turno. Não conta o retorno como entrega nem altera a ordem cadastrada.
+
+No CSV, o trecho de retorno usa ordem 0 e informa a base na coluna local. Entregas mantêm ordem a partir de 1.
