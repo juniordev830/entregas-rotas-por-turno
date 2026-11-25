@@ -36,3 +36,7 @@ cat exemplo.json | python app.py -
 Para manter os relatórios gerenciáveis, o arquivo de entrada aceita até 500 entregas por execução. Os turnos continuam agrupados ignorando maiúsculas/minúsculas e acentos, e cada trecho comporta até quatro entregas ligadas em sequência.
 
 Arquivos e entrada padrão JSON são limitados a 1 MB (1.000.000 bytes). Este limite vale mesmo quando as entregas seriam divididas em vários links de rota.
+
+## Retorno ao depósito
+
+Informe `"retornar_base": true` no JSON para adicionar um trecho de retorno ao depósito ao final de cada turno, caso a última entrega não seja na base. O trecho contém `retorno_base: true`, `destino`, uma lista vazia de entregas e um link de navegação. No CSV, o retorno tem ordem zero e o local é a base. O total de trechos inclui o retorno. Por padrão, a opção é desativada. Não estima distância, duração nem trânsito em tempo real.
