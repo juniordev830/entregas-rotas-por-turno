@@ -11,6 +11,9 @@ def celula(valor):
 def linhas(relatorio):
     for turno, trechos in relatorio["turnos"].items():
         for indice, trecho in enumerate(trechos, start=1):
+            if trecho.get("retorno_base"):
+                yield turno, indice, 0, trecho["origem"], trecho["destino"], trecho["google_maps"]
+                continue
             for ordem, local in enumerate(trecho["entregas"], start=1):
                 yield turno, indice, ordem, trecho["origem"], local, trecho["google_maps"]
 
