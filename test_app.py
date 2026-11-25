@@ -96,3 +96,34 @@ class JsonEstritoCliTest(unittest.TestCase):
                     self.assertEqual(resultado.returncode, 2)
                     self.assertIn(constante, resultado.stderr)
                     self.assertEqual(resultado.stdout, "")
+
+
+class RetornoBaseTest(unittest.TestCase):
+    def dados(self, **extras):
+        return dict(base="Depósito", entregas=[dict(turno="manhã", local="A"),
+                    dict(turno="tarde", local="B")], **extras)
+
+    def test_retorno_por_turno(self):
+        from app import run
+        from urllib.parse import urlparse, parse_qs
+        result = run(self.dados(retornar_base=True))
+        self.assertEqual(result["total_trechos"], 4)
+        for trechos in result["turnos"].values():
+            retorno = trechos[-1]
+            self.assertTrue(retorno["retorno_base"])
+            self.assertEqual(retorno["entregas"], [])
+            self.assertEqual(parse_qs(urlparse(retorno["google_maps"]).query)["destination"], ["Depósito"])
+
+    def test_padrao_sem_retorno(self):
+        from app import run
+        self.assertEqual(run(self.dados())["total_trechos"], 2)
+
+    def test_ja_na_base(self):
+        from app import run
+        self.assertEqual(run(dict(base="A", entregas=[dict(turno="manhã", local="A")],
+                                  retornar_base=True))["total_trechos"], 1)
+
+    def test_rejeita_texto(self):
+        from app import run
+        with self.assertRaises(ValueError):
+            run(self.dados(retornar_base="false"))
