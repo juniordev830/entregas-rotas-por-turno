@@ -127,3 +127,11 @@ class RetornoBaseTest(unittest.TestCase):
         from app import run
         with self.assertRaises(ValueError):
             run(self.dados(retornar_base="false"))
+
+    def test_csv_inclui_retorno(self):
+        from app import run
+        from relatorio_csv import linhas
+        registros = list(linhas(run(self.dados(retornar_base=True))))
+        retornos = [linha for linha in registros if linha[2] == 0]
+        self.assertEqual(len(retornos), 2)
+        self.assertTrue(all(linha[4] == "Depósito" for linha in retornos))
