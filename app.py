@@ -60,6 +60,9 @@ def run(data):
     ):
         raise ValueError("Informe até 500 entregas como objetos.")
     base = texto(data["base"])
+    retorno = data.get("retornar_base", False)
+    if type(retorno) is not bool:
+        raise ValueError("retornar_base deve ser booleano.")
     turnos = {}
     for item in entregas:
         turno = chave(item["turno"])
@@ -85,6 +88,8 @@ def run(data):
             trechos.append({"origem": origem, "entregas": paradas, "google_maps": link})
             inicio += tamanho
             origem = destino
+        if retorno and locais and origem != base:
+            trechos.append({"origem": origem, "entregas": [], "google_maps": rota(origem, base), "retorno_base": True})
         rotas[turno] = trechos
     return {"turnos": rotas, "total_trechos": sum(len(v) for v in rotas.values())}
 
