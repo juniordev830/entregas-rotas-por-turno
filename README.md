@@ -1,5 +1,7 @@
 # Entregas por turno com Google Maps
 
+**Navegação** · [Rodar](#rodar) · [Uso](#uso) · [Google Maps](#google-maps) · [Código e estudo](docs/ENGENHARIA_REVERSA.md)
+
 Agrupe destinos por turno e gere links com até quatro entregas em cada trecho.
 
 ## Rodar
@@ -36,3 +38,9 @@ cat exemplo.json | python app.py -
 Para manter os relatórios gerenciáveis, o arquivo de entrada aceita até 500 entregas por execução. Os turnos continuam agrupados ignorando maiúsculas/minúsculas e acentos, e cada trecho comporta até quatro entregas ligadas em sequência.
 
 Arquivos e entrada padrão JSON são limitados a 1 MB (1.000.000 bytes). Este limite vale mesmo quando as entregas seriam divididas em vários links de rota.
+
+## Código e roteiro de estudo
+
+Como dividir um turno em trechos garantindo que nenhum endereço seja perdido? O [guia de engenharia reversa](docs/ENGENHARIA_REVERSA.md) reúne o mapa dos módulos e uma pergunta técnica baseada no projeto.
+
+Mantido por [João Junior](https://github.com/juniordev830).
